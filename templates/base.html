@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Online Examination &amp; Result Management System{% endblock %} - Presidency University</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Top Global Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <a href="{{ url_for('index') }}" class="brand-link">
+        <div class="uni-logo">P</div>
+        <div class="header-titles">
+          <h1>PRESIDENCY UNIVERSITY</h1>
+          <p>School of Computer Science &amp; Engineering | Online Examination &amp; Result System</p>
+        </div>
+      </a>
+    </div>
+    <div class="header-right">
+      {% if current_user %}
+        <div class="user-pill">
+          <span class="user-avatar">{{ current_user.name[:2].upper() }}</span>
+          <div class="user-details">
+            <span class="user-name">{{ current_user.name }}</span>
+            <span class="user-role">
+              {% if current_user.is_admin() %}
+                🛡️ Administrator
+              {% else %}
+                🎓 {{ current_user.roll_no or 'Student' }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout ➔</a>
+      {% else %}
+        <a href="{{ url_for('login', role='student') }}" class="btn btn-outline-light btn-sm">Student Login</a>
+        <a href="{{ url_for('login', role='admin') }}" class="btn btn-primary btn-sm">Admin Portal</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Navigation Bar when logged in -->
+  {% if current_user %}
+    <nav class="module-nav">
+      <div class="nav-container">
+        {% if current_user.is_admin() %}
+          <span class="nav-label">ADMIN DESK:</span>
+          <a href="{{ url_for('admin_dashboard') }}" class="nav-tab {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">📊 Dashboard</a>
+          <a href="{{ url_for('admin_exams') }}" class="nav-tab {% if 'admin_exam' in request.endpoint %}active{% endif %}">📝 Manage Exams</a>
+          <a href="{{ url_for('admin_students') }}" class="nav-tab {% if request.endpoint == 'admin_students' %}active{% endif %}">👥 Manage Students</a>
+          <a href="{{ url_for('admin_results') }}" class="nav-tab {% if request.endpoint == 'admin_results' %}active{% endif %}">🏆 All Student Results</a>
+        {% else %}
+          <span class="nav-label">STUDENT PORTAL:</span>
+          <a href="{{ url_for('student_dashboard') }}" class="nav-tab {% if request.endpoint == 'student_dashboard' %}active{% endif %}">📊 My Dashboard</a>
+          <a href="{{ url_for('student_history') }}" class="nav-tab {% if request.endpoint == 'student_history' %}active{% endif %}">📜 Examination History</a>
+        {% endif %}
+      </div>
+    </nav>
+  {% endif %}
+
+  <!-- Flash Notification Messages -->
+  <div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span class="alert-text">{{ message }}</span>
+            <button class="alert-close" onclick="this.parentElement.remove();">&times;</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Main Body Content -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Presidency University, Bengaluru. School of Computer Science &amp; Engineering.</p>
+      <p class="footer-sub">CSE2271 Mini-Project: Online Examination &amp; Result Management System | Built with Python Flask &amp; SQLite</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+

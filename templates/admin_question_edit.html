@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Question - {{ exam.course_code }} - Admin Desk{% endblock %}
+
+{% block content %}
+<div class="card form-card">
+  <div class="card-header">
+    <div>
+      <h2>Edit Question: {{ exam.course_code }}</h2>
+      <p class="subtext">{{ exam.title }}</p>
+    </div>
+    <a href="{{ url_for('admin_exam_questions', exam_id=exam.id) }}" class="btn btn-outline btn-sm">← Back to Question Bank</a>
+  </div>
+
+  <form method="POST" class="mt-3">
+    <div class="form-group">
+      <label for="question_text"><strong>Question Stem / Problem Statement:</strong></label>
+      <textarea id="question_text" name="question_text" rows="3" class="form-control" required>{{ question.question_text }}</textarea>
+    </div>
+
+    <div class="options-builder-grid">
+      <div class="form-group">
+        <label for="option_a"><strong>Option A:</strong></label>
+        <input type="text" id="option_a" name="option_a" class="form-control" value="{{ question.option_a }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="option_b"><strong>Option B:</strong></label>
+        <input type="text" id="option_b" name="option_b" class="form-control" value="{{ question.option_b }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="option_c"><strong>Option C:</strong></label>
+        <input type="text" id="option_c" name="option_c" class="form-control" value="{{ question.option_c }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="option_d"><strong>Option D:</strong></label>
+        <input type="text" id="option_d" name="option_d" class="form-control" value="{{ question.option_d }}" required>
+      </div>
+    </div>
+
+    <div class="grid-3col mt-3">
+      <div class="form-group">
+        <label for="correct_option"><strong>Designated Correct Answer:</strong></label>
+        <select id="correct_option" name="correct_option" class="form-control" required>
+          <option value="A" {% if question.correct_option == 'A' %}selected{% endif %}>Option A</option>
+          <option value="B" {% if question.correct_option == 'B' %}selected{% endif %}>Option B</option>
+          <option value="C" {% if question.correct_option == 'C' %}selected{% endif %}>Option C</option>
+          <option value="D" {% if question.correct_option == 'D' %}selected{% endif %}>Option D</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="marks"><strong>Mark Weightage (+Marks):</strong></label>
+        <input type="number" id="marks" name="marks" step="0.5" min="0.5" class="form-control" value="{{ question.marks }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="difficulty"><strong>Difficulty Classification:</strong></label>
+        <select id="difficulty" name="difficulty" class="form-control">
+          <option value="Easy" {% if question.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+          <option value="Medium" {% if question.difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+          <option value="Hard" {% if question.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="explanation"><strong>Explanation / Reference Solution (Shown on Scorecard):</strong></label>
+      <textarea id="explanation" name="explanation" rows="2" class="form-control">{{ question.explanation or '' }}</textarea>
+    </div>
+
+    <div class="form-actions mt-4">
+      <button type="submit" class="btn btn-primary">💾 Update Question</button>
+      <a href="{{ url_for('admin_exam_questions', exam_id=exam.id) }}" class="btn btn-outline">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

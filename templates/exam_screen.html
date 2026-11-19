@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Exam - {{ exam.course_code }}: {{ exam.title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="exam-body">
+  <!-- Exam Header Bar -->
+  <header class="exam-top-bar">
+    <div class="exam-title-group">
+      <div class="exam-badge-icon">P</div>
+      <div>
+        <h2>{{ exam.course_code }}: {{ exam.title }}</h2>
+        <span class="subtext">Candidate: <strong>{{ user.name }}</strong> (Roll: {{ user.roll_no }})</span>
+      </div>
+    </div>
+
+    <!-- Center Timer -->
+    <div class="exam-timer-wrapper">
+      <span class="timer-icon">⏱️</span>
+      <div class="timer-values">
+        <span class="timer-label">TIME REMAINING</span>
+        <span class="timer-digits" id="liveTimer">00:00:00</span>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="exam-header-actions">
+      <button class="btn btn-danger btn-sm font-bold" onclick="promptSubmitExam()">
+        FINALIZE &amp; SUBMIT EXAM ➔
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Exam Main Grid -->
+  <div class="exam-main-grid">
+    <!-- Left: Question Container -->
+    <main class="question-container">
+      <div class="card q-card">
+        <div class="q-card-header">
+          <span class="badge badge-blue" id="qBadgeNum">QUESTION 01 OF {{ total_questions }}</span>
+          <span class="badge badge-teal" id="qBadgeMarks">Marks: +2.0 | Negative: -{{ exam.negative_marks_per_q }}</span>
+        </div>
+
+        <div class="q-card-body">
+          <h3 class="q-stem-text" id="qStemText">Loading Question Statement...</h3>
+
+          <div class="options-container" id="optionsContainer">
+            <!-- Dynamic Options injected via exam.js -->
+          </div>
+        </div>
+
+        <div class="q-card-footer">
+          <div class="footer-left">
+            <button class="btn btn-outline" id="prevBtn" onclick="navigatePrev()">⬅ Previous</button>
+            <button class="btn btn-outline" onclick="clearActiveOption()">Clear Response</button>
+            <button class="btn btn-warning" onclick="toggleMarkReview()">🚩 Mark for Review</button>
+          </div>
+          <div class="footer-right">
+            <button class="btn btn-primary" id="nextBtn" onclick="navigateNext()">Save &amp; Next ➔</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right: Question Palette & Proctor Feed -->
+    <aside class="palette-sidebar">
+      <div class="card palette-box">
+        <div class="palette-title">
+          <h4>Question Palette</h4>
+          <div class="palette-summary-legend">
+            <div class="p-legend-item"><span class="dot green"></span> Answered (<span id="countAnswered">0</span>)</div>
+            <div class="p-legend-item"><span class="dot orange"></span> Marked (<span id="countReview">0</span>)</div>
+            <div class="p-legend-item"><span class="dot red"></span> Unanswered (<span id="countUnanswered">0</span>)</div>
+            <div class="p-legend-item"><span class="dot gray"></span> Not Visited (<span id="countUnvisited">{{ total_questions }}</span>)</div>
+          </div>
+        </div>
+
+        <div class="palette-grid-buttons" id="paletteGrid">
+          <!-- 1 to N buttons injected via exam.js -->
+        </div>
+
+        <!-- Simulated AI Proctor Webcam Inset -->
+        <div class="proctor-cam-box">
+          <div class="cam-indicator">● PROCTOR ACTIVE</div>
+          <div class="cam-video-feed">
+            <div class="cam-silhouette">👨‍🎓</div>
+          </div>
+          <div class="cam-caption">
+            <span>AI Gaze &amp; Face Track: <strong>Normal</strong></span>
+            <span class="subtext">Strikes: <strong id="headerStrikeCount" class="text-green">0/3</strong></span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Anti-Cheat Violation Strike Modal -->
+  <div class="modal-overlay" id="violationModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="alert-icon">⚠️</span>
+        <div>
+          <h3>SECURITY ALERT: TAB SWITCH / WINDOW BLUR DETECTED</h3>
+          <p>Presidency University Automated Proctoring &amp; Anti-Cheating System</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="strike-box">
+          <div class="strike-text">
+            <strong>STRIKE COUNTER: WARNING <span id="modalStrikeNum">1</span> OF 3 USED</strong>
+            <p>You navigated away from the active exam session window. On the 3rd strike, the examination will terminate and auto-submit immediately.</p>
+          </div>
+          <div class="strike-badges">
+            <span class="strike-pip" id="pip1">1</span>
+            <span class="strike-pip" id="pip2">2</span>
+            <span class="strike-pip" id="pip3">3</span>
+          </div>
+        </div>
+        <div class="telemetry-info">
+          <p><strong>Incident Logged:</strong> <span id="violationTimestamp">--:--:--</span> | Session: PU-EXAM-{{ exam.id }}-{{ user.roll_no }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary full-width" onclick="dismissViolationModal()">
+          I UNDERSTAND &amp; RESUME FULLSCREEN EXAM ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay for Submission -->
+  <div class="modal-overlay" id="submittingOverlay">
+    <div class="submitting-card text-center">
+      <div class="spinner"></div>
+      <h3 class="mt-3">Evaluating Examination Answers...</h3>
+      <p class="subtext">Matching candidate responses against master key and calculating scores...</p>
+    </div>
+  </div>
+
+  <!-- Injected Exam Configuration for JS -->
+  <script>
+    const EXAM_CONFIG = {
+      examId: {{ exam.id }},
+      courseCode: "{{ exam.course_code }}",
+      durationMinutes: {{ exam.duration_minutes }},
+      negativeMarks: {{ exam.negative_marks_per_q }},
+      submitUrl: "{{ url_for('submit_exam_api', exam_id=exam.id) }}",
+      resultUrlBase: "{{ url_for('result_detail', result_id=0) }}".replace('/0', ''),
+      questions: {{ questions_json|tojson }}
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/exam.js') }}"></script>
+</body>
+</html>
+

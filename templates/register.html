@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Registration - Online Examination System{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="card auth-card wide">
+    <div class="auth-header">
+      <div class="auth-logo">P</div>
+      <h2>Student Registration</h2>
+      <p class="subtext">Create your examinee profile for Presidency University assessments</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('register') }}" class="auth-form">
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label>Full Student Name *</label>
+          <input type="text" name="name" class="form-control" placeholder="e.g. Sagar Ranmalle" required autofocus>
+        </div>
+        <div class="form-group col-half">
+          <label>University Roll Number / PRN *</label>
+          <input type="text" name="roll_no" class="form-control" placeholder="e.g. 20241CSE0750" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>University Email Address *</label>
+        <input type="email" name="email" class="form-control" placeholder="student@presidency.edu" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label>Department / Branch</label>
+          <select name="department" class="form-control">
+            <option value="Computer Science and Engineering">Computer Science &amp; Engineering</option>
+            <option value="Information Science and Engineering">Information Science &amp; Engineering</option>
+            <option value="Artificial Intelligence and Machine Learning">AI &amp; Machine Learning</option>
+            <option value="Data Science">Data Science</option>
+          </select>
+        </div>
+        <div class="form-group col-half">
+          <label>Current Semester</label>
+          <select name="semester" class="form-control">
+            <option value="1st Semester">1st Semester</option>
+            <option value="2nd Semester">2nd Semester</option>
+            <option value="3rd Semester">3rd Semester</option>
+            <option value="4th Semester" selected>4th Semester</option>
+            <option value="5th Semester">5th Semester</option>
+            <option value="6th Semester">6th Semester</option>
+            <option value="7th Semester">7th Semester</option>
+            <option value="8th Semester">8th Semester</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label>Create Password *</label>
+          <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div class="form-group col-half">
+          <label>Confirm Password *</label>
+          <input type="password" name="confirm_password" class="form-control" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg full-width mt-3">
+        Register Student Account ➔
+      </button>
+
+      <div class="auth-footer mt-4 text-center">
+        <p class="subtext">
+          Already registered? <a href="{{ url_for('login', role='student') }}" class="text-primary font-bold">Sign In here</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

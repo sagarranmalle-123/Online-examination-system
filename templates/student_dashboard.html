@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - Online Examination System{% endblock %}
+
+{% block content %}
+<div class="banner">
+  <div>
+    <h2>Welcome back, {{ user.name }}!</h2>
+    <p>{{ user.department }} | {{ user.semester }} | Roll No: <strong>{{ user.roll_no }}</strong></p>
+  </div>
+  <div class="banner-badge">Academic Session 2026-27</div>
+</div>
+
+<!-- Performance Metrics Grid -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-icon blue-bg">⏱️</div>
+    <div>
+      <div class="metric-label">AVAILABLE EXAMS</div>
+      <div class="metric-value blue-text">{{ exams|length }}</div>
+      <div class="metric-sub text-green">Active examination window</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon green-bg">✅</div>
+    <div>
+      <div class="metric-label">EXAMS ATTEMPTED</div>
+      <div class="metric-value green-text">{{ total_attempted }}</div>
+      <div class="metric-sub text-muted">{{ passed_count }} passed successfully</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon orange-bg">⭐</div>
+    <div>
+      <div class="metric-label">CUMULATIVE AVERAGE</div>
+      <div class="metric-value orange-text">{{ avg_percentage }}%</div>
+      <div class="metric-sub text-green">
+        {% if avg_percentage >= 75 %}Grade O / Distinction{% elif avg_percentage >= 60 %}First Class{% else %}Passing Status{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Available Scheduled Exams Table -->
+<div class="card">
+  <div class="card-header">
+    <h3>Scheduled Examination Assessments</h3>
+    <span class="badge badge-blue">Official University Roster</span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>COURSE CODE &amp; TITLE</th>
+          <th>DURATION</th>
+          <th>TOTAL MARKS</th>
+          <th>PASS MARKS</th>
+          <th>STATUS</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exam in exams %}
+          {% set res = results_map.get(exam.id) %}
+          <tr class="{% if not res %}highlight-row{% endif %}">
+            <td>
+              <strong>{{ exam.course_code }}: {{ exam.title }}</strong>
+              <div class="subtext">{{ exam.description[:90] }}...</div>
+            </td>
+            <td><strong>{{ exam.duration_minutes }} Mins</strong></td>
+            <td>{{ exam.total_marks }} Marks</td>
+            <td>{{ exam.passing_marks }} Marks</td>
+            <td>
+              {% if res %}
+                {% if res.passed %}
+                  <span class="badge badge-green">PASSED ({{ res.score }}/{{ res.max_score }})</span>
+                {% else %}
+                  <span class="badge badge-danger">FAILED ({{ res.score }}/{{ res.max_score }})</span>
+                {% endif %}
+              {% else %}
+                <span class="badge badge-green pulse">● LIVE NOW</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if res %}
+                <a href="{{ url_for('result_detail', result_id=res.id) }}" class="btn btn-outline btn-sm">
+                  View Scorecard ➔
+                </a>
+              {% else %}
+                <a href="{{ url_for('exam_instructions', exam_id=exam.id) }}" class="btn btn-primary btn-sm">
+                  ENTER EXAM ➔
+                </a>
+              {% endif %}
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">No active examinations currently scheduled.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

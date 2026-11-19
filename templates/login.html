@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}User Login - Online Examination System{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="card auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">P</div>
+      <h2>Portal Login</h2>
+      <p class="subtext">Select your role and enter your university credentials</p>
+    </div>
+
+    <!-- Role Tabs -->
+    <div class="role-selector">
+      <button type="button" class="role-tab {% if selected_role != 'admin' %}active{% endif %}" onclick="selectRole('student')">
+        🎓 Student
+      </button>
+      <button type="button" class="role-tab {% if selected_role == 'admin' %}active{% endif %}" onclick="selectRole('admin')">
+        🛡️ Faculty / Admin
+      </button>
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+      <input type="hidden" name="role" id="roleInput" value="{{ selected_role or 'student' }}">
+
+      <div class="form-group">
+        <label id="identifierLabel">
+          {% if selected_role == 'admin' %}
+            Admin Email Address
+          {% else %}
+            Student Roll Number or University Email
+          {% endif %}
+        </label>
+        <input type="text" name="identifier" class="form-control" 
+               placeholder="{% if selected_role == 'admin' %}admin@presidency.edu{% else %}20241CSE0750 or sagar@presidency.edu{% endif %}" 
+               required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg full-width mt-3">
+        Sign In to Portal ➔
+      </button>
+
+      <div class="auth-footer mt-4 text-center">
+        <p class="subtext">
+          New Student? <a href="{{ url_for('register') }}" class="text-primary font-bold">Register for Exams</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function selectRole(role) {
+  document.getElementById('roleInput').value = role;
+  const tabs = document.querySelectorAll('.role-tab');
+  tabs.forEach(t => t.classList.toggle('active', t.textContent.toLowerCase().includes(role)));
+  
+  const label = document.getElementById('identifierLabel');
+  if (role === 'admin') {
+    label.textContent = 'Admin Email Address';
+  } else {
+    label.textContent = 'Student Roll Number or University Email';
+  }
+}
+</script>
+{% endblock %}
+

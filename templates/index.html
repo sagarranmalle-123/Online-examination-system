@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Online Examination &amp; Result Management System{% endblock %}
+
+{% block content %}
+<div class="landing-hero">
+  <div class="hero-content">
+    <div class="hero-badge">Presidency School of Computer Science &amp; Engineering</div>
+    <h2>Online Examination &amp; Result Management System</h2>
+    <p>A secure, responsive, and automated platform for academic course assessments, proctored examinations, instant evaluations, and student performance analytics.</p>
+    
+    <div class="hero-actions">
+      <a href="{{ url_for('login', role='student') }}" class="btn btn-primary btn-lg">🎓 Student Login</a>
+      <a href="{{ url_for('register') }}" class="btn btn-outline btn-lg">📝 Student Registration</a>
+      <a href="{{ url_for('login', role='admin') }}" class="btn btn-teal btn-lg">🛡️ Faculty / Admin Portal</a>
+    </div>
+  </div>
+</div>
+
+<div class="portal-features-grid">
+  <div class="feature-card">
+    <div class="feature-icon">🛡️</div>
+    <h3>Proctored Live Testing</h3>
+    <p>Automated fullscreen lockdown, real-time tab-switch detection, and progressive strike warnings to ensure academic integrity.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">⏱️</div>
+    <h3>Synchronized Countdown</h3>
+    <p>Server-authoritative timers prevent local clock tampering, ensuring automatic response submission when time expires.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Instant Auto-Grading</h3>
+    <p>Immediate objective scoring comparing candidate responses against faculty master keys, including negative marking schemes.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Result Analytics</h3>
+    <p>Comprehensive student scorecards with topic competency bar charts, class percentile ranking, and question-by-question review.</p>
+  </div>
+</div>
+
+<div class="card demo-credentials-card">
+  <div class="card-header">
+    <h3>Demo User Credentials for Evaluation &amp; Viva</h3>
+    <span class="badge badge-teal">Pre-Configured</span>
+  </div>
+  <div class="grid-2col">
+    <div class="cred-box">
+      <strong>👨‍🎓 Student Account:</strong>
+      <p>Identifier: <code>student@presidency.edu</code> or <code>eknath@presidency.edu</code></p>
+      <p>Password: <code>Student@123</code></p>
+      <a href="{{ url_for('login', role='student') }}" class="btn btn-outline btn-sm mt-2">Log in as Student ➔</a>
+    </div>
+    <div class="cred-box">
+      <strong>🛡️ Administrator / Faculty Account:</strong>
+      <p>Identifier: <code>admin@presidency.edu</code></p>
+      <p>Password: <code>Admin@123</code></p>
+      <a href="{{ url_for('login', role='admin') }}" class="btn btn-outline btn-sm mt-2">Log in as Admin ➔</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Students - Admin Desk{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div>
+      <h2>Registered Students Directory</h2>
+      <p class="subtext">View, monitor and manage student examinee accounts and their performance records</p>
+    </div>
+    <div class="header-actions">
+      <span class="badge badge-blue">Total Students: {{ students|length }}</span>
+    </div>
+  </div>
+
+  {% if students %}
+    <div class="table-responsive mt-3">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Name</th>
+            <th>Roll Number / PRN</th>
+            <th>Email Address</th>
+            <th>Department</th>
+            <th>Semester</th>
+            <th>Exams Attempted</th>
+            <th>Registered Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td><strong>{{ student.name }}</strong></td>
+              <td><span class="badge badge-teal">{{ student.roll_no or 'N/A' }}</span></td>
+              <td><code>{{ student.email }}</code></td>
+              <td>{{ student.department }}</td>
+              <td>{{ student.semester }}</td>
+              <td>
+                <span class="badge badge-blue">{{ student.results|length }} Submissions</span>
+              </td>
+              <td>{{ student.created_at.strftime('%d-%b-%Y') if student.created_at else 'Active' }}</td>
+              <td>
+                <div class="button-group">
+                  <a href="{{ url_for('admin_results') }}?student_id={{ student.id }}" class="btn btn-outline btn-sm" title="View Student Results">View Results</a>
+                  <form action="{{ url_for('admin_delete_student', student_id=student.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove student {{ student.name }}? This will permanently delete all their exam records.');">
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>No registered students found in the database.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+# Environments & bytecode
+.env
+.env.*
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Local SQLite databases
+instance/
+*.db
+.write_test
+
+# Test outputs & temporary scratch files
+.pytest_cache/
+test_page.html
+test_page.png
+test_edge.py
+test_gen.png
+
+# Presentation build temp
+pptx_build_temp/

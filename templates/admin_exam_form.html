@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if exam %}Edit Exam: {{ exam.course_code }}{% else %}Create Examination{% endif %} - Admin{% endblock %}
+
+{% block content %}
+<div class="card max-w-800 mx-auto">
+  <div class="card-header">
+    <div>
+      <h3>{% if exam %}Edit Examination Settings: {{ exam.course_code }}{% else %}Create New Course Examination{% endif %}</h3>
+      <p class="subtext">Configure assessment parameters, duration, passing rules, and proctoring settings</p>
+    </div>
+    <a href="{{ url_for('admin_exams') }}" class="btn btn-outline btn-sm">Back to Exams List</a>
+  </div>
+
+  <form method="POST" class="mt-4">
+    <div class="form-row">
+      <div class="form-group col-half">
+        <label>Course Code *</label>
+        <input type="text" name="course_code" class="form-control" placeholder="e.g. CSE2271" 
+               value="{{ exam.course_code if exam else '' }}" required autofocus>
+      </div>
+      <div class="form-group col-half">
+        <label>Examination Title *</label>
+        <input type="text" name="title" class="form-control" placeholder="e.g. Mini Project Review &amp; Demo: Architecture" 
+               value="{{ exam.title if exam else '' }}" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Description &amp; Guidelines</label>
+      <textarea name="description" class="form-control" rows="3" placeholder="Overview of assessment topics, modules tested, and guidelines...">{{ exam.description if exam else '' }}</textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-half">
+        <label>Duration (Minutes) *</label>
+        <input type="number" name="duration_minutes" class="form-control" min="5" max="300" 
+               value="{{ exam.duration_minutes if exam else 60 }}" required>
+      </div>
+      <div class="form-group col-half">
+        <label>Total Marks *</label>
+        <input type="number" step="0.5" name="total_marks" class="form-control" 
+               value="{{ exam.total_marks if exam else 50.0 }}" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-half">
+        <label>Passing Marks Cutoff *</label>
+        <input type="number" step="0.5" name="passing_marks" class="form-control" 
+               value="{{ exam.passing_marks if exam else 20.0 }}" required>
+      </div>
+      <div class="form-group col-half">
+        <label>Negative Marks per Wrong Answer</label>
+        <input type="number" step="0.05" name="negative_marks_per_q" class="form-control" 
+               value="{{ exam.negative_marks_per_q if exam else 0.25 }}">
+        <span class="subtext">Deducted for incorrect responses (0 for none)</span>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <label class="checkbox-container">
+        <input type="checkbox" name="is_active" value="1" {% if not exam or exam.is_active %}checked{% endif %}>
+        <span><strong>Publish Immediately (Live):</strong> Make this exam immediately visible on student dashboards.</span>
+      </label>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary btn-lg full-width">
+        {% if exam %}Save Updated Parameters ➔{% else %}Create Examination &amp; Proceed to Question Bank ➔{% endif %}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

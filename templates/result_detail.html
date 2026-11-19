@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Scorecard: {{ exam.course_code }} - {{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="scorecard-header-bar">
+  <div>
+    <h2>Official Examination Scorecard &amp; Performance Report</h2>
+    <p class="subtext">Course: <strong>{{ exam.course_code }} - {{ exam.title }}</strong> | Student: <strong>{{ student.name }} ({{ student.roll_no }})</strong></p>
+  </div>
+  <div class="scorecard-actions">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-outline">Back to Dashboard</a>
+  </div>
+</div>
+
+<!-- 4 Top Metric Cards -->
+<div class="metrics-grid mt-4">
+  <!-- Card 1: Score & Grade -->
+  <div class="metric-card score-highlight">
+    <div class="metric-icon green-bg">🏆</div>
+    <div>
+      <div class="metric-label text-green">TOTAL SCORE OBTAINED</div>
+      <div class="metric-value green-text">{{ result.score }} <span class="sub-denom">/ {{ result.max_score }}</span></div>
+      <div class="metric-sub text-green font-bold">
+        {{ result.percentage }}% | 
+        {% if result.passed %}
+          <span class="badge badge-green">PASSED</span>
+        {% else %}
+          <span class="badge badge-danger">FAILED</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: Batch Rank -->
+  <div class="metric-card">
+    <div class="metric-icon blue-bg">🎖️</div>
+    <div>
+      <div class="metric-label">BATCH RANKING</div>
+      <div class="metric-value blue-text">#{{ rank }} <span class="sub-denom">/ {{ total_candidates }}</span></div>
+      <div class="metric-sub text-green">Top {{ ((rank / total_candidates) * 100)|round(1) }}% of Examinees</div>
+    </div>
+  </div>
+
+  <!-- Card 3: Accuracy -->
+  <div class="metric-card">
+    <div class="metric-icon orange-bg">🎯</div>
+    <div>
+      <div class="metric-label">ACCURACY RATE</div>
+      <div class="metric-value">
+        {% if (result.correct_count + result.incorrect_count) > 0 %}
+          {{ ((result.correct_count / (result.correct_count + result.incorrect_count)) * 100)|round(1) }}%
+        {% else %}
+          0%
+        {% endif %}
+      </div>
+      <div class="metric-sub text-muted">{{ result.correct_count }} Correct | {{ result.incorrect_count }} Wrong</div>
+    </div>
+  </div>
+
+  <!-- Card 4: Time & Integrity -->
+  <div class="metric-card">
+    <div class="metric-icon blue-bg">⏱️</div>
+    <div>
+      <div class="metric-label">TIME CONSUMED</div>
+      <div class="metric-value">{{ result.formatted_time() }}</div>
+      <div class="metric-sub text-muted">
+        Strikes Logged: 
+        {% if result.strike_count == 0 %}
+          <strong class="text-green">0 (Clean Session)</strong>
+        {% else %}
+          <strong class="text-danger">{{ result.strike_count }}/3 Strikes</strong>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Detailed Performance & Question Review -->
+<div class="card mt-4">
+  <div class="card-header">
+    <h3>Question-by-Question Detailed Review</h3>
+    <span class="badge badge-teal">Verified by Assessment Engine</span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Q#</th>
+          <th>QUESTION STATEMENT &amp; EXPLANATION</th>
+          <th>YOUR CHOICE</th>
+          <th>OFFICIAL KEY</th>
+          <th>MARKS</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in answers_data %}
+          {% set q = item.question %}
+          <tr class="{% if item.is_correct %}correct-row{% elif item.selected_option %}incorrect-row{% else %}unattempted-row{% endif %}">
+            <td><strong>Q{{ loop.index }}</strong></td>
+            <td>
+              <div class="font-bold">{{ q.question_text }}</div>
+              <div class="q-options-breakdown mt-2">
+                <span class="opt-mini {% if q.correct_option == 'A' %}is-key{% endif %}">A: {{ q.option_a }}</span>
+                <span class="opt-mini {% if q.correct_option == 'B' %}is-key{% endif %}">B: {{ q.option_b }}</span>
+                <span class="opt-mini {% if q.correct_option == 'C' %}is-key{% endif %}">C: {{ q.option_c }}</span>
+                <span class="opt-mini {% if q.correct_option == 'D' %}is-key{% endif %}">D: {{ q.option_d }}</span>
+              </div>
+              {% if q.explanation %}
+                <div class="q-rationale mt-2">
+                  💡 <strong>Explanation:</strong> {{ q.explanation }}
+                </div>
+              {% endif %}
+            </td>
+            <td>
+              {% if item.selected_option %}
+                <strong class="{% if item.is_correct %}text-green{% else %}text-danger{% endif %}">
+                  Option {{ item.selected_option }}
+                </strong>
+              {% else %}
+                <span class="text-muted">Unanswered</span>
+              {% endif %}
+            </td>
+            <td>
+              <strong class="text-green">Option {{ q.correct_option }}</strong>
+            </td>
+            <td>
+              {% if item.is_correct %}
+                <strong class="text-green">+{{ item.marks_awarded }}</strong>
+              {% elif item.selected_option %}
+                <strong class="text-danger">{{ item.marks_awarded }}</strong>
+              {% else %}
+                <span class="text-muted">0.0</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if item.is_correct %}
+                <span class="badge badge-green">✓ Correct</span>
+              {% elif item.selected_option %}
+                <span class="badge badge-danger">✗ Incorrect</span>
+              {% else %}
+                <span class="badge badge-gray">○ Skipped</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" width="1200" height="650">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="sysGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="ucGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="actorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="secGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="dashedArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="650" fill="url(#bgGrad)" rx="12"/>
+  <rect x="15" y="15" width="1170" height="620" fill="none" stroke="#cbd5e1" stroke-width="1.5" rx="10"/>
+
+  <!-- System Boundary Box -->
+  <rect x="230" y="45" width="680" height="560" fill="url(#sysGrad)" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="6,4" rx="14" filter="url(#shadow)"/>
+  <rect x="230" y="45" width="680" height="38" fill="#0284c7" rx="14"/>
+  <rect x="230" y="65" width="680" height="18" fill="#0284c7"/>
+  <text x="570" y="70" font-family="'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">SYSTEM BOUNDARY: ONLINE EXAMINATION SYSTEM</text>
+
+  <!-- ================= ACTOR: STUDENT (Left) ================= -->
+  <g transform="translate(100, 220)">
+    <!-- Stick figure -->
+    <circle cx="25" cy="18" r="14" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+    <line x1="25" y1="32" x2="25" y2="75" stroke="#0369a1" stroke-width="4" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="-2" y2="60" stroke="#0369a1" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="52" y2="60" stroke="#0369a1" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="5" y2="120" stroke="#0369a1" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="45" y2="120" stroke="#0369a1" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Label -->
+    <rect x="-30" y="130" width="110" height="32" rx="6" fill="#0f172a"/>
+    <text x="25" y="151" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Student / Examinee</text>
+  </g>
+
+  <!-- ================= ACTOR: FACULTY / EXAMINER (Right Top) ================= -->
+  <g transform="translate(1030, 110)">
+    <circle cx="25" cy="18" r="14" fill="#0d9488" stroke="#0f766e" stroke-width="2"/>
+    <line x1="25" y1="32" x2="25" y2="75" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="-2" y2="60" stroke="#0f766e" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="52" y2="60" stroke="#0f766e" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="5" y2="120" stroke="#0f766e" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="45" y2="120" stroke="#0f766e" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="-35" y="130" width="120" height="32" rx="6" fill="#0f172a"/>
+    <text x="25" y="151" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Faculty / Examiner</text>
+  </g>
+
+  <!-- ================= ACTOR: ADMINISTRATOR (Right Bottom) ================= -->
+  <g transform="translate(1030, 370)">
+    <circle cx="25" cy="18" r="14" fill="#6366f1" stroke="#4f46e5" stroke-width="2"/>
+    <line x1="25" y1="32" x2="25" y2="75" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="-2" y2="60" stroke="#4f46e5" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="46" x2="52" y2="60" stroke="#4f46e5" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="5" y2="120" stroke="#4f46e5" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="25" y1="75" x2="45" y2="120" stroke="#4f46e5" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="-35" y="130" width="120" height="32" rx="6" fill="#0f172a"/>
+    <text x="25" y="151" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">System Admin</text>
+  </g>
+
+  <!-- ================= SECONDARY ACTOR: PROCTORING ENGINE (Bottom Center) ================= -->
+  <g transform="translate(470, 520)">
+    <rect x="0" y="0" width="200" height="52" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="24" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">&lt;&lt;System Service&gt;&gt;</text>
+    <text x="100" y="42" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">AI Proctor &amp; Auto-Timer</text>
+  </g>
+
+  <!-- ================= USE CASE ELLIPSES ================= -->
+  <!-- UC1: Login -->
+  <g transform="translate(270, 105)">
+    <ellipse cx="105" cy="24" rx="100" ry="24" fill="url(#ucGrad)" stroke="#0284c7" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="105" y="28" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">UC1: Login &amp; Role Auth</text>
+  </g>
+
+  <!-- UC2: View Dashboard & Exams -->
+  <g transform="translate(270, 170)">
+    <ellipse cx="105" cy="24" rx="100" ry="24" fill="url(#ucGrad)" stroke="#0284c7" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="105" y="28" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">UC2: View Scheduled Exams</text>
+  </g>
+
+  <!-- UC3: Start Exam Session -->
+  <g transform="translate(270, 240)">
+    <ellipse cx="105" cy="25" rx="100" ry="25" fill="url(#ucGrad)" stroke="#0284c7" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="105" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">UC3: Start Exam &amp; Lockdown</text>
+  </g>
+
+  <!-- UC4: Attempt & Review Questions -->
+  <g transform="translate(270, 315)">
+    <ellipse cx="105" cy="25" rx="100" ry="25" fill="url(#ucGrad)" stroke="#0284c7" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="105" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">UC4: Answer &amp; Flag Questions</text>
+  </g>
+
+  <!-- UC5: Proctoring & Tab-Switch (Extend) -->
+  <g transform="translate(480, 385)">
+    <ellipse cx="100" cy="25" rx="95" ry="25" fill="url(#secGrad)" stroke="#d97706" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="100" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="bold" fill="#92400e" text-anchor="middle">UC5: Tab-Switch Detection</text>
+  </g>
+
+  <!-- UC6: Auto-Submit on Timeout (Extend) -->
+  <g transform="translate(270, 395)">
+    <ellipse cx="100" cy="25" rx="95" ry="25" fill="url(#secGrad)" stroke="#d97706" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="100" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="11.5" font-weight="bold" fill="#92400e" text-anchor="middle">UC6: Auto-Submit on Timeout</text>
+  </g>
+
+  <!-- UC7: View Instant Scorecard -->
+  <g transform="translate(270, 465)">
+    <ellipse cx="105" cy="25" rx="100" ry="25" fill="url(#ucGrad)" stroke="#0284c7" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="105" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">UC7: View Results &amp; Analytics</text>
+  </g>
+
+  <!-- UC8: Create & Schedule Exam (Faculty) -->
+  <g transform="translate(680, 115)">
+    <ellipse cx="110" cy="25" rx="105" ry="25" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="110" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0f766e" text-anchor="middle">UC8: Create &amp; Schedule Exam</text>
+  </g>
+
+  <!-- UC9: Manage Question Bank (Faculty) -->
+  <g transform="translate(680, 185)">
+    <ellipse cx="110" cy="25" rx="105" ry="25" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="110" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0f766e" text-anchor="middle">UC9: Author Question Bank</text>
+  </g>
+
+  <!-- UC10: Evaluate & Release Grades (Faculty) -->
+  <g transform="translate(680, 255)">
+    <ellipse cx="110" cy="25" rx="105" ry="25" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="110" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0f766e" text-anchor="middle">UC10: Review Exam Reports</text>
+  </g>
+
+  <!-- UC11: Manage Users & Roles (Admin) -->
+  <g transform="translate(680, 360)">
+    <ellipse cx="110" cy="25" rx="105" ry="25" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="110" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#4338ca" text-anchor="middle">UC11: User &amp; Role Management</text>
+  </g>
+
+  <!-- UC12: Audit Integrity Logs (Admin) -->
+  <g transform="translate(680, 435)">
+    <ellipse cx="110" cy="25" rx="105" ry="25" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.8" filter="url(#shadow)"/>
+    <text x="110" y="29" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" fill="#4338ca" text-anchor="middle">UC12: Audit System &amp; Cheat Logs</text>
+  </g>
+
+  <!-- ================= CONNECTING LINES ================= -->
+  <!-- Student associations -->
+  <line x1="160" y1="280" x2="270" y2="130" stroke="#0284c7" stroke-width="1.6"/>
+  <line x1="160" y1="285" x2="270" y2="195" stroke="#0284c7" stroke-width="1.6"/>
+  <line x1="160" y1="290" x2="270" y2="265" stroke="#0284c7" stroke-width="1.6"/>
+  <line x1="160" y1="295" x2="270" y2="340" stroke="#0284c7" stroke-width="1.6"/>
+  <line x1="160" y1="305" x2="270" y2="490" stroke="#0284c7" stroke-width="1.6"/>
+
+  <!-- Faculty associations -->
+  <line x1="1000" y1="180" x2="895" y2="140" stroke="#0d9488" stroke-width="1.6"/>
+  <line x1="1000" y1="185" x2="895" y2="210" stroke="#0d9488" stroke-width="1.6"/>
+  <line x1="1000" y1="190" x2="895" y2="280" stroke="#0d9488" stroke-width="1.6"/>
+  <line x1="1000" y1="175" x2="475" y2="130" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+  <!-- Admin associations -->
+  <line x1="1000" y1="440" x2="895" y2="385" stroke="#6366f1" stroke-width="1.6"/>
+  <line x1="1000" y1="445" x2="895" y2="460" stroke="#6366f1" stroke-width="1.6"/>
+  <line x1="1000" y1="435" x2="475" y2="135" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+  <!-- Secondary actor connections -->
+  <line x1="570" y1="520" x2="575" y2="440" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4,3"/>
+  <line x1="530" y1="520" x2="410" y2="445" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4,3"/>
+
+  <!-- <<extend>> relationship between UC4 and UC5 -->
+  <path d="M 460 340 L 515 385" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#dashedArrow)"/>
+  <rect x="470" y="348" width="60" height="16" fill="#ffffff" rx="3"/>
+  <text x="500" y="360" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- <<extend>> relationship between UC4 and UC6 -->
+  <path d="M 375 365 L 370 395" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#dashedArrow)"/>
+  <rect x="345" y="372" width="60" height="16" fill="#ffffff" rx="3"/>
+  <text x="375" y="384" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- Legend at Bottom -->
+  <g transform="translate(50, 605)">
+    <rect x="0" y="0" width="1100" height="28" fill="#ffffff" stroke="#e2e8f0" rx="6"/>
+    <text x="20" y="19" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="bold" fill="#475569">LEGEND:</text>
+    <line x1="85" y1="14" x2="115" y2="14" stroke="#0284c7" stroke-width="2"/>
+    <text x="125" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">Association</text>
+    <line x1="210" y1="14" x2="245" y2="14" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="255" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">&lt;&lt;extend&gt;&gt; / &lt;&lt;include&gt;&gt;</text>
+    <ellipse cx="400" cy="14" rx="14" ry="7" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+    <text x="422" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">Student Use Case</text>
+    <ellipse cx="560" cy="14" rx="14" ry="7" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+    <text x="582" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">Faculty Use Case</text>
+    <ellipse cx="715" cy="14" rx="14" ry="7" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
+    <text x="737" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">Admin Use Case</text>
+    <ellipse cx="865" cy="14" rx="14" ry="7" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+    <text x="887" y="18" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#475569">Proctoring Event</text>
+  </g>
+</svg>

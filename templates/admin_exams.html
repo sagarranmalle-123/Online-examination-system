@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Examinations - Admin Desk{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div>
+      <h3>Course Examination Management</h3>
+      <p class="subtext">Create, schedule, configure rules, and manage question sets</p>
+    </div>
+    <a href="{{ url_for('admin_create_exam') }}" class="btn btn-primary">+ Create New Exam</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>COURSE CODE &amp; TITLE</th>
+          <th>DURATION</th>
+          <th>TOTAL MARKS</th>
+          <th>QUESTIONS</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exam in exams %}
+          <tr>
+            <td>
+              <strong>{{ exam.course_code }}: {{ exam.title }}</strong>
+              <div class="subtext">{{ exam.description[:80] }}...</div>
+            </td>
+            <td><strong>{{ exam.duration_minutes }} Mins</strong></td>
+            <td>{{ exam.total_marks }} Marks (Pass: {{ exam.passing_marks }})</td>
+            <td>
+              <span class="badge badge-blue">{{ exam.question_count() }} Questions</span>
+            </td>
+            <td>
+              <a href="{{ url_for('admin_toggle_exam', exam_id=exam.id) }}" class="status-toggle">
+                {% if exam.is_active %}
+                  <span class="badge badge-green">● Published (Live)</span>
+                {% else %}
+                  <span class="badge badge-gray">○ Draft (Hidden)</span>
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              <div class="action-btn-group">
+                <a href="{{ url_for('admin_exam_questions', exam_id=exam.id) }}" class="btn btn-teal btn-sm" title="Manage Questions">
+                  ❓ Questions ({{ exam.question_count() }})
+                </a>
+                <a href="{{ url_for('admin_edit_exam', exam_id=exam.id) }}" class="btn btn-outline btn-sm" title="Edit Parameters">
+                  ✏️ Edit
+                </a>
+                <form method="POST" action="{{ url_for('admin_delete_exam', exam_id=exam.id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to permanently delete this exam and all associated questions?');">
+                  <button type="submit" class="btn btn-danger btn-sm" title="Delete Exam">🗑️</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">No examinations created yet. Click "+ Create New Exam" above.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

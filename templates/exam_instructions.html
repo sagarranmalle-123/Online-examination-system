@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Instructions - {{ exam.course_code }}{% endblock %}
+
+{% block content %}
+<div class="card max-w-800 mx-auto">
+  <div class="card-header">
+    <div>
+      <h3>{{ exam.course_code }}: {{ exam.title }}</h3>
+      <p class="subtext">Pre-Examination Instructions &amp; Candidate Honor Code</p>
+    </div>
+    <span class="badge badge-teal">Duration: {{ exam.duration_minutes }} Mins</span>
+  </div>
+
+  <div class="exam-info-callout">
+    <div class="grid-2col">
+      <div>
+        <p><strong>Candidate Name:</strong> {{ user.name }}</p>
+        <p><strong>Roll Number:</strong> {{ user.roll_no }}</p>
+      </div>
+      <div>
+        <p><strong>Total Marks:</strong> {{ exam.total_marks }} Marks</p>
+        <p><strong>Negative Marking:</strong> {% if exam.negative_marks_per_q > 0 %}-{{ exam.negative_marks_per_q }} per incorrect answer{% else %}None{% endif %}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="instructions-body mt-4">
+    <h4>Important Examination Guidelines:</h4>
+    <ul class="styled-list">
+      <li><strong>Synchronized Timer:</strong> The countdown timer will begin immediately upon clicking "Start Assessment". Once the timer reaches <code>00:00:00</code>, the examination will automatically submit.</li>
+      <li><strong>Fullscreen Lockdown:</strong> The test console will request Fullscreen mode. Exiting fullscreen or navigating to other windows is logged as a violation.</li>
+      <li><strong>Tab-Switch Proctoring (3 Strikes):</strong> The system uses browser visibility listeners to detect tab-switching. On the <strong>3rd strike</strong>, your test session will be terminated and submitted immediately.</li>
+      <li><strong>Question Palette Navigation:</strong>
+        <span class="legend-inline"><span class="dot green"></span> Answered</span> |
+        <span class="legend-inline"><span class="dot orange"></span> Marked for Review</span> |
+        <span class="legend-inline"><span class="dot red"></span> Unanswered</span> |
+        <span class="legend-inline"><span class="dot gray"></span> Not Visited</span>
+      </li>
+      <li><strong>Periodic Autosave:</strong> Your selections are saved in real time. If your browser accidentally closes, reconnecting will resume your answers.</li>
+    </ul>
+
+    <div class="honor-code-box mt-4">
+      <label class="checkbox-container">
+        <input type="checkbox" id="agreeCheckbox" onchange="toggleStartButton()">
+        <span>I have read and understood all the examination rules. I pledge on my honor that I will not use unauthorized materials, external search engines, or illicit assistance during this test.</span>
+      </label>
+    </div>
+
+    <div class="mt-4 text-center">
+      <a href="{{ url_for('start_exam', exam_id=exam.id) }}" id="startExamBtn" class="btn btn-primary btn-lg disabled-link">
+        I AM READY &amp; LAUNCH EXAM ➔
+      </a>
+      <div class="mt-2">
+        <a href="{{ url_for('student_dashboard') }}" class="btn btn-outline btn-sm">Cancel &amp; Return to Dashboard</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleStartButton() {
+  const cb = document.getElementById('agreeCheckbox');
+  const btn = document.getElementById('startExamBtn');
+  if (cb.checked) {
+    btn.classList.remove('disabled-link');
+  } else {
+    btn.classList.add('disabled-link');
+  }
+}
+</script>
+{% endblock %}
+

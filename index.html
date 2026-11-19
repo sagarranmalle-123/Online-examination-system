@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System - Presidency University (CSE2271)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Global Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="uni-logo">P</div>
+      <div class="header-titles">
+        <h1>PRESIDENCY UNIVERSITY</h1>
+        <p>School of Computer Science &amp; Engineering | CSE2271 Mini Project Review &amp; Demo</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-pill">
+        <span class="user-avatar">SR</span>
+        <div class="user-details">
+          <span class="user-name">Sagar Ranmalle</span>
+          <span class="user-role">Roll: 20241CSE0750 (Student)</span>
+        </div>
+      </div>
+      <button class="btn btn-outline" id="proctorStatusBadge">🛡️ Proctor: Active</button>
+    </div>
+  </header>
+
+  <!-- Module Navigation Tabs Bar -->
+  <nav class="module-nav">
+    <div class="nav-container">
+      <span class="nav-label">SYSTEM MODULES:</span>
+      <button class="nav-tab active" data-module="1">1. Student Portal &amp; Dashboard</button>
+      <button class="nav-tab" data-module="2">2. Faculty Question Bank &amp; Exam Builder</button>
+      <button class="nav-tab" data-module="3">3. Live Candidate Test Console</button>
+      <button class="nav-tab" data-module="4">4. Anti-Cheat &amp; Proctoring Monitor</button>
+      <button class="nav-tab" data-module="5">5. Automated Evaluation &amp; Analytics</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- ================= MODULE 1: AUTH & STUDENT DASHBOARD ================= -->
+    <section class="module-pane active" id="module-1">
+      <div class="banner">
+        <div>
+          <h2>Welcome to Online Exam Portal!</h2>
+          <p>B.Tech Computer Science &amp; Engineering | Semester IV Examination Window 2026-27</p>
+        </div>
+        <div class="banner-badge">System Health: 100% Operational</div>
+      </div>
+
+      <!-- Quick Metrics Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon blue-bg">⏱</div>
+          <div>
+            <div class="metric-label">UPCOMING EXAMS</div>
+            <div class="metric-value blue-text">02</div>
+            <div class="metric-sub text-green">Active schedule</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon green-bg">✅</div>
+          <div>
+            <div class="metric-label">COMPLETED TESTS</div>
+            <div class="metric-value green-text">08</div>
+            <div class="metric-sub text-muted">All Evaluated</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon orange-bg">⭐</div>
+          <div>
+            <div class="metric-label">AVERAGE ACCURACY</div>
+            <div class="metric-value orange-text">88.5%</div>
+            <div class="metric-sub text-green">Grade: A+ (Distinction)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available Scheduled Exams Table -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Scheduled Examinations</h3>
+          <span class="badge badge-blue">Term Assessment Phase 2</span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>COURSE CODE &amp; TITLE</th>
+                <th>SCHEDULED TIME</th>
+                <th>DURATION</th>
+                <th>MAX MARKS</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight-row">
+                <td>
+                  <strong>CSE2271 - Mini Project Review &amp; Demo</strong>
+                  <div class="subtext">Department of CSE | Section CSE-10</div>
+                </td>
+                <td>12-Nov-2026, 08:00 PM</td>
+                <td>60 Mins</td>
+                <td>50 Marks</td>
+                <td><span class="badge badge-green pulse">● LIVE NOW</span></td>
+                <td><button class="btn btn-primary" onclick="switchModule(3)">ENTER EXAM ➔</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>CSE2500 - Data Analytics Fundamentals</strong>
+                  <div class="subtext">School of CSE | Core Course</div>
+                </td>
+                <td>14-Nov-2026, 10:00 AM</td>
+                <td>90 Mins</td>
+                <td>100 Marks</td>
+                <td><span class="badge badge-gray">SCHEDULED</span></td>
+                <td><button class="btn btn-outline" onclick="alert('Exam schedule starts on 14-Nov-2026')">View Guidelines</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>CSE2102 - Object Oriented Programming in Java</strong>
+                  <div class="subtext">Completed on 28-Oct-2026</div>
+                </td>
+                <td>28-Oct-2026, 02:00 PM</td>
+                <td>45 Mins</td>
+                <td>50 Marks</td>
+                <td><span class="badge badge-blue">SCORE: 46/50</span></td>
+                <td><button class="btn btn-outline" onclick="switchModule(5)">View Scorecard</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODULE 2: QUESTION BANK & EXAM BUILDER ================= -->
+    <section class="module-pane" id="module-2">
+      <div class="grid-2col">
+        <!-- Left: Exam Configuration -->
+        <div class="card">
+          <div class="card-header">
+            <h3>1. Exam Configuration &amp; Policies</h3>
+            <span class="badge badge-teal">Faculty Desk</span>
+          </div>
+          <form id="examConfigForm" onsubmit="event.preventDefault(); alert('Exam parameters saved successfully!');">
+            <div class="form-group">
+              <label>Select Course Code &amp; Subject</label>
+              <select class="form-control">
+                <option>CSE2271 - Mini Project Review &amp; Demo (B.Tech CSE)</option>
+                <option>CSE2500 - Data Analytics Fundamentals</option>
+                <option>CSE2102 - Data Structures &amp; Algorithms</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Assessment Title</label>
+              <input type="text" class="form-control" value="Mid-Term Assessment: System Architecture &amp; UML Design">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label>Duration (Minutes)</label>
+                <input type="number" class="form-control" value="60">
+              </div>
+              <div class="form-group col-half">
+                <label>Total Questions</label>
+                <input type="number" class="form-control" value="25">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Anti-Cheat &amp; Security Protocols</label>
+              <div class="toggle-list">
+                <label class="toggle-item"><input type="checkbox" checked> Enforce Fullscreen Lockdown Mode</label>
+                <label class="toggle-item"><input type="checkbox" checked> Enable Tab-Switch Detection (Max 3 Strikes)</label>
+                <label class="toggle-item"><input type="checkbox" checked> Question Sequencing &amp; Option Permutation</label>
+                <label class="toggle-item"><input type="checkbox" checked> Negative Marking Scheme (-0.25 / wrong)</label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-teal full-width">SAVE &amp; PUBLISH EXAM SCHEDULE</button>
+          </form>
+        </div>
+
+        <!-- Right: Question Bank Authoring -->
+        <div class="card">
+          <div class="card-header">
+            <h3>2. Question Bank Authoring Tool</h3>
+            <span class="badge badge-blue">Question 8 of 25</span>
+          </div>
+          <div class="q-meta-bar">
+            <span>Type: <strong>MCQ</strong></span>
+            <span>Difficulty: <strong class="text-orange">Medium</strong></span>
+            <span>Marks: <strong class="text-green">+2.0 / -0.5</strong></span>
+          </div>
+          <div class="form-group mt-3">
+            <label>Question Stem / Problem Statement</label>
+            <textarea class="form-control" rows="3">Which data structure is primarily utilized to implement Breadth First Search (BFS) in a graph traversal algorithm to discover vertices in shortest-distance order?</textarea>
+          </div>
+          <div class="options-builder">
+            <div class="opt-builder-row">
+              <input type="radio" name="correctKey" value="A">
+              <input type="text" class="form-control" value="A) Stack (LIFO)">
+            </div>
+            <div class="opt-builder-row is-correct">
+              <input type="radio" name="correctKey" value="B" checked>
+              <input type="text" class="form-control" value="B) Queue (FIFO)  [CORRECT KEY]">
+            </div>
+            <div class="opt-builder-row">
+              <input type="radio" name="correctKey" value="C">
+              <input type="text" class="form-control" value="C) Priority Queue / Min-Heap">
+            </div>
+            <div class="opt-builder-row">
+              <input type="radio" name="correctKey" value="D">
+              <input type="text" class="form-control" value="D) Binary Search Tree">
+            </div>
+          </div>
+          <div class="button-row mt-4">
+            <button class="btn btn-outline" onclick="alert('Importing 50 sample questions from CSV...')">📁 Bulk CSV Import</button>
+            <button class="btn btn-primary" onclick="alert('Question saved to Question Bank!')">+ Save Question</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODULE 3: LIVE CANDIDATE TEST CONSOLE ================= -->
+    <section class="module-pane" id="module-3">
+      <!-- Live Session Header -->
+      <div class="session-bar">
+        <div class="session-info">
+          <h3>CSE2271: Mini Project Assessment</h3>
+          <span class="subtext">Candidate: Sagar Ranmalle (20241CSE0750)</span>
+        </div>
+        <div class="session-timer">
+          <span>⏱ REMAINING:</span>
+          <span class="timer-display" id="examTimer">00:42:18</span>
+        </div>
+        <button class="btn btn-danger" onclick="confirmSubmitExam()">SUBMIT EXAM</button>
+      </div>
+
+      <div class="grid-exam">
+        <!-- Question Content -->
+        <div class="card exam-card">
+          <div class="exam-card-header">
+            <span class="badge badge-blue" id="qCurrentBadge">QUESTION 08 OF 25</span>
+            <span class="badge badge-teal">Marks: +2.0 | Negative: -0.5</span>
+          </div>
+          <div class="question-body">
+            <p class="question-stem" id="qStemText">Which data structure is primarily utilized to implement Breadth First Search (BFS) in a graph traversal algorithm to discover vertices in shortest-distance order?</p>
+            
+            <div class="options-list" id="qOptionsContainer">
+              <label class="option-card" onclick="selectOption('A')">
+                <input type="radio" name="examOption" value="A">
+                <span class="opt-text">A.  Stack</span>
+              </label>
+              <label class="option-card selected" onclick="selectOption('B')">
+                <input type="radio" name="examOption" value="B" checked>
+                <span class="opt-text">B.  Queue (Candidate's Active Selection)</span>
+              </label>
+              <label class="option-card" onclick="selectOption('C')">
+                <input type="radio" name="examOption" value="C">
+                <span class="opt-text">C.  Priority Queue / Min-Heap</span>
+              </label>
+              <label class="option-card" onclick="selectOption('D')">
+                <input type="radio" name="examOption" value="D">
+                <span class="opt-text">D.  Binary Search Tree</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="exam-footer">
+            <button class="btn btn-outline" onclick="prevQuestion()">⬅ Previous</button>
+            <button class="btn btn-outline" onclick="clearOption()">Clear Selection</button>
+            <button class="btn btn-warning" onclick="markForReview()">🚩 Mark for Review</button>
+            <button class="btn btn-success" onclick="nextQuestion()">Save &amp; Next ➔</button>
+          </div>
+        </div>
+
+        <!-- Question Palette Sidebar -->
+        <div class="card palette-card">
+          <div class="palette-header">
+            <h4>Question Navigation Palette</h4>
+            <div class="palette-legend">
+              <span class="legend-item"><span class="legend-dot green"></span> Ans (12)</span>
+              <span class="legend-item"><span class="legend-dot orange"></span> Rev (2)</span>
+              <span class="legend-item"><span class="legend-dot red"></span> Unans (5)</span>
+              <span class="legend-item"><span class="legend-dot gray"></span> Left (6)</span>
+            </div>
+          </div>
+
+          <div class="palette-grid" id="paletteGrid">
+            <!-- 25 Questions generated by JS -->
+          </div>
+
+          <!-- Webcam Proctor Simulator -->
+          <div class="webcam-box">
+            <div class="webcam-live-indicator">● PROCTOR LIVE</div>
+            <div class="webcam-feed">
+              <div class="avatar-face">👨‍💻</div>
+            </div>
+            <p class="webcam-label">AI Gaze &amp; Video Proctor Active</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODULE 4: PROCTORING & LOCKDOWN ================= -->
+    <section class="module-pane" id="module-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Real-Time Proctoring &amp; Anti-Cheating Surveillance Desk</h3>
+          <button class="btn btn-danger" onclick="triggerTestViolation()">⚡ Simulate Tab-Switch Violation</button>
+        </div>
+        <p class="text-muted">This module monitors browser activity, detects window blur, fullscreen exits, and multi-monitor setups.</p>
+        
+        <div class="grid-2col mt-4">
+          <!-- Live Candidate Streams -->
+          <div class="card subcard">
+            <h4>Active Examinee Telemetry Stream</h4>
+            <div class="candidate-stream-list">
+              <div class="stream-item warning-border">
+                <div class="stream-avatar">SR</div>
+                <div class="stream-info">
+                  <strong>Sagar Ranmalle (20241CSE0750)</strong>
+                  <div class="subtext">CSE2271 | IP: 10.12.44.18 | Windows 11 Chrome</div>
+                </div>
+                <span class="badge badge-danger">2 STRIKES (WARNING)</span>
+              </div>
+              <div class="stream-item">
+                <div class="stream-avatar">EK</div>
+                <div class="stream-info">
+                  <strong>Eknath (20241CSE0752)</strong>
+                  <div class="subtext">CSE2271 | IP: 10.12.44.22 | Active Fullscreen</div>
+                </div>
+                <span class="badge badge-green">NORMAL</span>
+              </div>
+              <div class="stream-item">
+                <div class="stream-avatar">SR</div>
+                <div class="stream-info">
+                  <strong>Sagar R. (20241CSE0794)</strong>
+                  <div class="subtext">CSE2271 | IP: 10.12.44.35 | Active Fullscreen</div>
+                </div>
+                <span class="badge badge-green">NORMAL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit Log Feed -->
+          <div class="card subcard">
+            <h4>Live Proctor Incident Audit Log</h4>
+            <div class="audit-log-feed" id="proctorLogFeed">
+              <div class="log-entry danger">
+                <span class="log-time">20:18:42</span>
+                <span class="log-msg"><strong>[ALERT]</strong> Window Blur: Sagar Ranmalle switched to external browser tab. Strike #2 logged.</span>
+              </div>
+              <div class="log-entry warning">
+                <span class="log-time">20:14:02</span>
+                <span class="log-msg"><strong>[ALERT]</strong> Fullscreen Exit attempt logged for 20241CSE0750. Strike #1 recorded.</span>
+              </div>
+              <div class="log-entry info">
+                <span class="log-time">20:00:15</span>
+                <span class="log-msg"><strong>[EVENT]</strong> Exam session initialized for 142 registered candidates in Section CSE-10.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODULE 5: AUTOMATED EVALUATION & ANALYTICS ================= -->
+    <section class="module-pane" id="module-5">
+      <div class="card">
+        <div class="score-summary-bar">
+          <div>
+            <h2>Assessment Evaluation: CSE2271</h2>
+            <p>Candidate: Sagar Ranmalle (20241CSE0750) | Presidency University Examination Portal</p>
+          </div>
+          <button class="btn btn-primary" onclick="alert('Downloading verified Official Grade Card (PDF)...')">📥 Export PDF Scorecard</button>
+        </div>
+
+        <!-- 4 Top Score Cards -->
+        <div class="metrics-grid mt-4">
+          <div class="metric-card score-highlight">
+            <div class="metric-label text-green">TOTAL SCORE</div>
+            <div class="metric-value green-text">44.5 <span class="sub-denom">/ 50.0</span></div>
+            <div class="metric-sub text-green">89.0% | Grade O (Distinction)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">BATCH PERCENTILE</div>
+            <div class="metric-value blue-text">#03 <span class="sub-denom">/ 142</span></div>
+            <div class="metric-sub text-green">Top 2.1% of CSE Class</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">ACCURACY RATE</div>
+            <div class="metric-value">92.0%</div>
+            <div class="metric-sub text-muted">23 Correct | 2 Wrong</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">TIME CONSUMED</div>
+            <div class="metric-value">42m 18s</div>
+            <div class="metric-sub text-muted">Max Limit: 60 Minutes</div>
+          </div>
+        </div>
+
+        <div class="grid-2col mt-4">
+          <!-- Topic Competency Bar Chart -->
+          <div class="card subcard">
+            <h4>Subject Topic Competency Breakdown</h4>
+            <div class="chart-list">
+              <div class="chart-item">
+                <div class="chart-label"><span>Software Architecture &amp; UML Design</span> <strong>95%</strong></div>
+                <div class="bar-bg"><div class="bar-fill green-bar" style="width: 95%;"></div></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Use Case &amp; Activity Modeling</span> <strong>90%</strong></div>
+                <div class="bar-bg"><div class="bar-fill blue-bar" style="width: 90%;"></div></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Graph Algorithms &amp; BFS Traversal</span> <strong>88%</strong></div>
+                <div class="bar-bg"><div class="bar-fill blue-bar" style="width: 88%;"></div></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Database Concurrency &amp; ACID Rules</span> <strong>85%</strong></div>
+                <div class="bar-bg"><div class="bar-fill teal-bar" style="width: 85%;"></div></div>
+              </div>
+              <div class="chart-item">
+                <div class="chart-label"><span>Anti-Cheat &amp; Security Protocols</span> <strong>80%</strong></div>
+                <div class="bar-bg"><div class="bar-fill orange-bar" style="width: 80%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question Audit Review Table -->
+          <div class="card subcard">
+            <h4>Question-by-Question Audit Table</h4>
+            <div class="table-responsive">
+              <table class="data-table small">
+                <thead>
+                  <tr>
+                    <th>Q#</th>
+                    <th>TOPIC</th>
+                    <th>YOUR CHOICE</th>
+                    <th>OFFICIAL KEY</th>
+                    <th>MARKS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Q1</strong></td>
+                    <td>Actor Relationship Rules</td>
+                    <td><span class="badge badge-green">Option B</span></td>
+                    <td>Option B</td>
+                    <td><strong class="text-green">+2.0</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Q2</strong></td>
+                    <td>ACID Isolation Levels</td>
+                    <td><span class="badge badge-green">Option A</span></td>
+                    <td>Option A</td>
+                    <td><strong class="text-green">+2.0</strong></td>
+                  </tr>
+                  <tr class="wrong-row">
+                    <td><strong>Q3</strong></td>
+                    <td>QuickSort Worst-Case</td>
+                    <td><span class="badge badge-danger">Option A (O(n log n))</span></td>
+                    <td>Option B (O(n²))</td>
+                    <td><strong class="text-danger">-0.5</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Q4</strong></td>
+                    <td>BFS Traversal Queue</td>
+                    <td><span class="badge badge-green">Option B (Queue)</span></td>
+                    <td>Option B</td>
+                    <td><strong class="text-green">+2.0</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Q5</strong></td>
+                    <td>Dynamic Programming Memo</td>
+                    <td><span class="badge badge-green">Option C</span></td>
+                    <td>Option C</td>
+                    <td><strong class="text-green">+2.0</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="faculty-remarks-box">
+              <strong>Review Committee Remarks:</strong>
+              <p>"Excellent presentation of UML diagrams, clean modular system design, and functional proctoring. Recommended for full marks."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Anti-Cheat Violation Modal Overlay -->
+  <div class="modal-overlay" id="violationModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="alert-icon">⚠️</span>
+        <div>
+          <h3>SECURITY ALERT: TAB SWITCH / WINDOW BLUR DETECTED</h3>
+          <p>Presidency University Automated Examination Proctor</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="strike-box">
+          <div class="strike-text">
+            <strong>STRIKE COUNTER: WARNING <span id="strikeCountText">1</span> OF 3 USED</strong>
+            <p>Navigating away from the active exam window or exiting fullscreen is prohibited. On Strike 3, your exam will auto-submit immediately.</p>
+          </div>
+          <div class="strike-badges">
+            <span class="strike-pip active" id="pip1">1</span>
+            <span class="strike-pip" id="pip2">2</span>
+            <span class="strike-pip" id="pip3">3</span>
+          </div>
+        </div>
+        <div class="telemetry-info">
+          <p><strong>Incident Logged:</strong> <span id="violationTimestamp">20:18:42</span> | IP: 10.12.44.18 | Session: PU-EXAM-2026-0750</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary full-width" onclick="resumeExamFromModal()">I UNDERSTAND &amp; RESUME FULLSCREEN EXAM (TIMER ACTIVE) ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

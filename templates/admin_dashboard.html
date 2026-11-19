@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Administrator Dashboard - Online Examination System{% endblock %}
+
+{% block content %}
+<div class="banner">
+  <div>
+    <h2>Examination Administration &amp; Control Desk</h2>
+    <p>Department of Computer Science &amp; Engineering | Presidency University Examination Portal</p>
+  </div>
+  <div class="banner-actions">
+    <a href="{{ url_for('admin_create_exam') }}" class="btn btn-primary">+ Create New Exam</a>
+    <a href="{{ url_for('admin_export_results_csv') }}" class="btn btn-outline-light">📥 Export Results (CSV)</a>
+  </div>
+</div>
+
+<!-- Admin KPI Grid -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-icon blue-bg">👨‍🎓</div>
+    <div>
+      <div class="metric-label">REGISTERED EXAMINEES</div>
+      <div class="metric-value blue-text">{{ total_students }}</div>
+      <div class="metric-sub text-muted">Active B.Tech students</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon green-bg">📝</div>
+    <div>
+      <div class="metric-label">TOTAL ASSESSMENTS</div>
+      <div class="metric-value green-text">{{ total_exams }}</div>
+      <div class="metric-sub text-green">Across CSE Curriculum</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon orange-bg">❓</div>
+    <div>
+      <div class="metric-label">QUESTION BANK ITEMS</div>
+      <div class="metric-value orange-text">{{ total_questions }}</div>
+      <div class="metric-sub text-muted">Categorized MCQs</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon blue-bg">🏆</div>
+    <div>
+      <div class="metric-label">TOTAL SUBMISSIONS</div>
+      <div class="metric-value">{{ total_submissions }}</div>
+      <div class="metric-sub text-green">Avg Score: {{ avg_score }}%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Student Submissions Table -->
+<div class="card mt-4">
+  <div class="card-header">
+    <h3>Recent Student Submissions</h3>
+    <a href="{{ url_for('admin_results') }}" class="btn btn-outline btn-sm">View All Results ➔</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>SUBMITTED AT</th>
+          <th>STUDENT NAME</th>
+          <th>ROLL NUMBER</th>
+          <th>COURSE</th>
+          <th>SCORE</th>
+          <th>PERCENTAGE</th>
+          <th>STRIKES</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in recent_submissions %}
+          <tr>
+            <td>{{ r.submitted_at.strftime('%d-%b, %I:%M %p') }}</td>
+            <td><strong>{{ r.student.name }}</strong></td>
+            <td>{{ r.student.roll_no or 'N/A' }}</td>
+            <td>{{ r.exam.course_code }}</td>
+            <td><strong>{{ r.score }}</strong> / {{ r.max_score }}</td>
+            <td>
+              {% if r.passed %}
+                <span class="badge badge-green">{{ r.percentage }}% (PASS)</span>
+              {% else %}
+                <span class="badge badge-danger">{{ r.percentage }}% (FAIL)</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if r.strike_count == 0 %}
+                <span class="badge badge-gray">0 Strikes</span>
+              {% else %}
+                <span class="badge badge-danger">{{ r.strike_count }} Strikes</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('result_detail', result_id=r.id) }}" class="btn btn-outline btn-sm">
+                Scorecard ➔
+              </a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="8" class="text-center text-muted py-4">No student submissions recorded yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
