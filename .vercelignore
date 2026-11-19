@@ -20,3 +20,8 @@ test_gen.png
 
 # Presentation build temp
 pptx_build_temp/
+
+# Root prototype files (Flask uses templates/ and static/)
+index.html
+style.css
+app.js
